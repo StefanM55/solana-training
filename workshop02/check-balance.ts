@@ -1,4 +1,4 @@
-import "dotenv/config";
+require("dotenv").config({ path: "../.env" });
 import { Connection, LAMPORTS_PER_SOL, PublicKey, clusterApiUrl } from "@solana/web3.js";
 import { airdropIfRequired, getKeypairFromEnvironment } from "@solana-developers/helpers";
 import bs58 from "bs58";
