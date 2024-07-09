@@ -1,4 +1,4 @@
-import { Connection, clusterApiUrl } from "@solana/web3.js";
+import { Connection, PublicKey, clusterApiUrl } from "@solana/web3.js";
 import { getExplorerLink, getKeypairFromEnvironment } from "@solana-developers/helpers";
 require("dotenv").config({ path: "../.env" });
 import * as fs from "fs";
@@ -75,28 +75,25 @@ async function createNft(metaplex: Metaplex, uri: string, nftData: NftData): Pro
 }
 
 // [BONUS] TODO: Implement helper function update NFT
-// async function updateNftUri(
-//   metaplex: Metaplex,
-//   uri: string,
-//   mintAddress: PublicKey,
-// ) {
-//   console.log("🚀 Updating NFT URI...");
-//   // TODO: fetch NFT data using mint address
-//   const nft = ???;
+async function updateNftUri(metaplex: Metaplex, uri: string, mintAddress: PublicKey) {
+  console.log("🚀 Updating NFT URI...");
+  // TODO: fetch NFT data using mint address
+  const nft = await metaplex.nfts().findByMint({ mintAddress });
 
-//   // TODO: update the NFT metadata
-//   const { respnose } = ???;
+  // TODO: update the NFT metadata
+  const { response } = await metaplex.nfts().update({
+    nftOrSft: nft,
+    uri: uri,
+  });
 
-//   const link = getExplorerLink("address", nft.address.toString(), "devnet");
-//   console.log(`✅ Token Mint: ${link}`);
+  const link = getExplorerLink("address", nft.address.toString(), "devnet");
+  console.log(`✅ Token Mint: ${link}`);
 
-//   console.log(
-//     `Token Mint: https://explorer.solana.com/address/${nft.address.toString()}?cluster=devnet`,
-//   );
+  console.log(`Token Mint: https://explorer.solana.com/address/${nft.address.toString()}?cluster=devnet`);
 
-//   const txLink = getExplorerLink("tx", response.signature, "devnet");
-//   console.log(`✅ Transaction: ${txLink}`);
-// }
+  const txLink = getExplorerLink("tx", response.signature, "devnet");
+  console.log(`✅ Transaction: ${txLink}`);
+}
 
 async function main() {
   // create a new connection to the cluster's API
@@ -127,7 +124,7 @@ async function main() {
   const updatedUri = await uploadMetadata(metaplex, updateNftData);
 
   // 2. update the NFT using the helper function and the new URI from the metadata
-  // await updateNftUri(metaplex, updatedUri, nft.address);
+  await updateNftUri(metaplex, updatedUri, nft.address);
 }
 
 main()
@@ -143,11 +140,15 @@ main()
 //RESULTS
 // 🔑 We've loaded our keypair securely, using an env file! Our public key is: 4NPB27Vj5spw2NyFfaCZ8E1ojh7TVxPq18tFZ6vP4QYo
 // 🚀 Uploading metadata...
-// image uri: https://arweave.net/uwwiGkTelvYTXeAeA4Kv5BLjPwzEkvjaHQM0jvYCC0w
-// Done ✅! Metadata uri: https://arweave.net/s6XApEGC2mE-u09yKsTcKCuEDRoRS0XKiyyyFV8k3O8
+// image uri: https://arweave.net/jkImDcP8vbPPpzcKgBt2EpoQ4z3cOtd7nPaDexnu0Wc
+// Done ✅! Metadata uri: https://arweave.net/kOA8TG-SO7Um_OeyWYyyR2oa5Y_AoMhLs4bhO1ZKyiQ
 // 🚀 Creating NFT...
-// ✅ Token Mint: https://explorer.solana.com/address/2SjLsPuNCQY5QtnoTDgsaHKBmjukvuym1bPdidbWV13h?cluster=devnet
+// ✅ Token Mint: https://explorer.solana.com/address/8AuTYWvfyWLbhCksy8gqmad6QQXUYVs9FXSzznuT3rLG?cluster=devnet
 // 🚀 Uploading metadata...
-// image uri: https://arweave.net/h2WhZR1LCMR5N3HzmbX7_yw5aInN6VTDcwku1p0SiAg
-// Done ✅! Metadata uri: https://arweave.net/SoIXdOGZH8b9PMokAhiAymqMuWNjc_7sH-qKwUMlkKA
+// image uri: https://arweave.net/31GBTRAGJR9nsvGoZlcPRisNK9dXDltPvu7LVrM3ax8
+// Done ✅! Metadata uri: https://arweave.net/y8KbgG8Ntfqvcx1EnbSBWuUik8kzU9_uvwWpzH2elO0
+// 🚀 Updating NFT URI...
+// ✅ Token Mint: https://explorer.solana.com/address/8AuTYWvfyWLbhCksy8gqmad6QQXUYVs9FXSzznuT3rLG?cluster=devnet
+// Token Mint: https://explorer.solana.com/address/8AuTYWvfyWLbhCksy8gqmad6QQXUYVs9FXSzznuT3rLG?cluster=devnet
+// ✅ Transaction: https://explorer.solana.com/tx/5PDE95Gy5U4NtoDcjbEyfyZyyXMmM9FDja21EXKYcbjE43JDcnTFwjTrnc8NGuJEYAWTWfwz6A5sBhq1HJFCsUy7?cluster=devnet
 // Finished successfully
