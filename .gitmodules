@@ -1,3 +1,6 @@
 [submodule "workshop06/rustlings"]
 	path = workshop06/rustlings
 	url = https://github.com/StefanM55/rustlings2.git
+[submodule "workshop07/test_1"]
+	path = workshop07/test_1
+	url = https://github.com/StefanM55/test_1.git
