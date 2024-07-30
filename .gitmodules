@@ -1,0 +1,3 @@
+[submodule "workshop06/rustlings"]
+	path = workshop06/rustlings
+	url = https://github.com/StefanM55/rustlings2.git
