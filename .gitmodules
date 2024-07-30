@@ -4,3 +4,6 @@
 [submodule "workshop07/test_1"]
 	path = workshop07/test_1
 	url = https://github.com/StefanM55/test_1.git
+[submodule "workshop08/favorites"]
+	path = workshop08/favorites
+	url = https://github.com/StefanM55/favorites.git
